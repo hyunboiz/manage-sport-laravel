@@ -19,4 +19,20 @@ class Sport extends Model
         }
         return self::create($data);
     }
+    public function updateSport(array $data)
+{
+    if (isset($data['icon'])) {
+        $iconPath = $data['icon']->store('sports', 'public');
+        $iconFullPath = '/storage/' . $iconPath;  // Hoặc chỉ lưu $iconPath nếu muốn dùng asset()
+        $data['icon'] = $iconFullPath;
+    }
+
+    return $this->update($data);
+}
+
+public function getIconUrlAttribute()
+{
+    return asset($this->icon);  // Nếu lưu full path (/storage/...), thì chỉ cần asset($this->icon)
+}
+
 }

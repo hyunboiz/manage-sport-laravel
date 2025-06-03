@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SportController;
-
+use App\Http\Controllers\PaymentMethodController;
 
 
 /*
@@ -24,5 +24,9 @@ Route::post('/admin/updateAdmin',  [AdminController::class, 'update']);
 Route::post('/admin/deleteAdmin',  [AdminController::class, 'destroy']);
 
 Route::post('/admin/createSport',  [SportController::class, 'store']);
+Route::post('/admin/updateSport',  [SportController::class, 'update']);
+Route::post('/admin/deleteSport',  [SportController::class, 'destroy']);
 
-
+Route::post('/admin/createPayment',  [PaymentMethodController::class, 'store']);
+Route::post('/admin/updatePayment',  [PaymentMethodController::class, 'update']);
+Route::post('/admin/deletePayment',  [PaymentMethodController::class, 'destroy']);

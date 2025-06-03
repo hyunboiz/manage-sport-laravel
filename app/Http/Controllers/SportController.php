@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Sport;
 use App\Http\Requests\StoreSportRequest;
 use App\Http\Requests\UpdateSportRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SportController extends Controller
 {
@@ -42,28 +44,7 @@ class SportController extends Controller
             'data' => $sport,
         ]);
     }
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Sport  $sport
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Sport $sport)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Sport  $sport
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Sport $sport)
-    {
-        //
-    }
-
+   
     /**
      * Update the specified resource in storage.
      *
@@ -73,7 +54,19 @@ class SportController extends Controller
      */
     public function update(UpdateSportRequest $request, Sport $sport)
     {
-        //
+        $validated = $request->validated();
+        $sport = Sport::findOrFail($validated['id']);
+
+        $sport->updateSport([
+            'name' => $validated['name'],
+            'icon' => $request->file('icon'),  // Nếu có gửi icon
+        ]);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Cập nhật môn thể thao thành công!',
+        ]);
+        
     }
 
     /**
@@ -82,8 +75,31 @@ class SportController extends Controller
      * @param  \App\Models\Sport  $sport
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Sport $sport)
+    public function destroy(Request $request, Sport $sport)
     {
-        //
+        $id = $request->input('id');
+        $sport = Sport::find($id);
+
+        if (!$sport) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Không tìm thấy môn thể thao với ID: ' . $id,
+            ], 404);
+        }
+
+        // Xóa file icon nếu có
+        if ($sport->icon) {
+            $iconPath = str_replace('/storage/', '', $sport->icon);  // Chuyển về path lưu trữ trong storage
+            if (Storage::disk('public')->exists($iconPath)) {
+                Storage::disk('public')->delete($iconPath);
+            }
+        }
+
+        $sport->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Xóa môn thể thao thành công!',
+        ]);
     }
 }

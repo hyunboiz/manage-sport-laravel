@@ -1,6 +1,6 @@
 @extends('layouts.admin.app')
 
-@section('title', 'Dashboard Admin')
+@section('title', 'Quản lý môn thể thao')
 
 @section('styles')
 
@@ -33,6 +33,7 @@
                 <table class="table align-items-center mb-0">
                   <thead class="bg-gray-100">
                     <tr>
+                      <th class="text-secondary text-xs font-weight-semibold opacity-7">ID</th>
                       <th class="text-secondary text-xs font-weight-semibold opacity-7">Name</th>
                       <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Image</th>
                       <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Create At</th>
@@ -42,6 +43,7 @@
                   <tbody>
                     @foreach($sports as $sport)
                       <tr>
+                        <td>{{ $sport->id }}</td>
                         <td>
                           <div class="d-flex px-2 py-1">
                             <div class="d-flex flex-column justify-content-center ms-1">
@@ -65,7 +67,7 @@
                               data-bs-title="Edit user">
                             <i class="fa fa-pencil" aria-hidden="true"></i>
                           </span>
-                          <span type="button" onclick="deleteAdmin({{$sport->id}})">
+                          <span type="button" onclick="deleteSport({{$sport->id}})">
                             <i class="fa fa-trash" aria-hidden="true"></i>
                           </span>
                         </td>
@@ -102,8 +104,9 @@
             </div>
             <label>Icon</label>
             <div class="mb-3">
-                <input type="file" name="icon" id="sportIcon" class="form-control" placeholder="Enter Icon Image">
+                <input type="file" name="icon" id="sportIcon" accept="image/*" class="form-control" onchange="const f=this.files[0];if(f) preview.src=(window.URL||window.webkitURL).createObjectURL(f)" placeholder="Enter Icon Image">
             </div>
+             <img src="" alt="" width="140px" id="preview">
         </form>
       </div>
       <div class="modal-footer">
@@ -132,14 +135,14 @@
           </div>
           <div class="mb-3">
             <label for="edit-icon" class="form-label">Icon</label>
-            <input type="file" class="form-control" onchange="document.getElementById('preview').src=URL.createObjectURL(this.files[0])" name="icon">
+            <input type="file" class="form-control" id="edit-icon" accept="image/*" onchange="const f=this.files[0];if(f) editicon.src=(window.URL||window.webkitURL).createObjectURL(f)" name="icon">
           </div>
-          <img src="" alt="" width="140px" id="edit-icon">
+          <img src="" alt="" width="140px" id="editicon">
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-        <button type="button" class="btn btn-primary" id="saveAdminChanges">Lưu thay đổi</button>
+        <button type="button" class="btn btn-primary" id="saveSportBtn">Lưu thay đổi</button>
       </div>
     </div>
   </div>
@@ -156,7 +159,7 @@
     // Đổ dữ liệu vào input trong modal
     $('#edit-id').val(data.id);
     $('#edit-name').val(data.name);
-    $('#edit-icon').attr('src', '/storage/'+data.icon);
+    $('#editicon').attr('src', '/storage/'+data.icon);
 
     // Hiển thị modal
     $('#editSportModal').modal('show');
@@ -186,14 +189,17 @@
     });
   });
   // Sửa sports
-  $('#saveAdminChanges').click(function() {
+  $('#saveSportBtn').click(function() {
     var data = new FormData();
-    data.append('name', $('#sportName').val());
-    data.append('icon', $('#sportIcon')[0].files[0]);
+    data.append('id', $('#edit-id').val());
+    data.append('name', $('#edit-name').val());
+    if ($('#edit-icon')[0].files.length > 0) {
+    data.append('icon', $('#edit-icon')[0].files[0]);
+    }
     $.ajax({
         type: "POST",
         url: "/api/admin/updateSport",  
-        data: formData,
+        data: data,
         dataType: "JSON",
         contentType: false,
         processData: false,
@@ -208,8 +214,8 @@
     });
 });
 
-//Delete admin
-function deleteAdmin(adminId) {
+//Delete Sport
+function deleteSport(sportId) {
         Swal.fire({
         title: "Thông báo",
         text: "Bạn chắc chắn muốn xóa?",
@@ -222,9 +228,9 @@ function deleteAdmin(adminId) {
         if (result.isConfirmed) {
               $.ajax({
             type: "POST",
-            url: "/api/admin/deleteAdmin",
+            url: "/api/admin/deleteSport",
             data: {
-                id: adminId
+                id: sportId
             },
             success: function(response) {
                 if (response.status) {

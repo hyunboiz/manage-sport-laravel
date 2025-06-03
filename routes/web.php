@@ -1,10 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-// call to Controller
+use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\SportController;
 use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Route;
+
 
 
 /*
@@ -28,5 +29,6 @@ Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminController::class, 'viewLogin']);
     Route::get('/adminstrator/manage', [AdminController::class, 'createAdmin']);
     Route::get('/sport/manage', [SportController::class, 'index']);
+    Route::get('/paymentmethod/manage', [PaymentMethodController::class, 'index']);
 });
 Route::get('/admin', [AdminController::class, 'index']);
