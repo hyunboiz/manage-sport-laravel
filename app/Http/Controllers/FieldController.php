@@ -1,86 +1,74 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Field;
+use App\Models\Sport;
+use App\Models\Type;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreFieldRequest;
 use App\Http\Requests\UpdateFieldRequest;
 
 class FieldController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $fields = Field::with(['sport', 'type'])->get();
+        $sports = Sport::all();
+        $types = Type::all();
+
+        return view('admin.field', compact('fields', 'sports', 'types'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreFieldRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreFieldRequest $request)
     {
-        //
+        $data = $request->validated();
+        $field = Field::createField($data);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Thêm mới sân thành công!',
+        ]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Field  $field
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Field $field)
+    public function update(UpdateFieldRequest $request)
     {
-        //
+        $id = $request->input('id');
+        $field = Field::findOrFail($id);
+
+        $field->updateField($request->validated());
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Cập nhật sân thành công!',
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Field  $field
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Field $field)
+    public function destroy(Request $request)
     {
-        //
-    }
+        $id = $request->input('id');
+        $field = Field::find($id);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateFieldRequest  $request
-     * @param  \App\Models\Field  $field
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateFieldRequest $request, Field $field)
-    {
-        //
-    }
+        if (!$field) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Không tìm thấy sân.',
+            ]);
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Field  $field
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Field $field)
-    {
-        //
+        // Xoá ảnh nếu có
+        if ($field->image) {
+            $oldPath = str_replace('/storage/', '', $field->image);
+            if (\Storage::disk('public')->exists($oldPath)) {
+                \Storage::disk('public')->delete($oldPath);
+            }
+        }
+
+        $field->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Xóa sân thành công!',
+        ]);
     }
 }

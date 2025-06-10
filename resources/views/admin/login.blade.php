@@ -11,17 +11,17 @@
                   <h3 class="font-weight-black text-dark display-6">Welcome back</h3>
                 </div>
                 <div class="card-body">
-                  <form role="form">
+                  <form role="form" id="adminLoginForm">
                     <label>Email Address</label>
                     <div class="mb-3">
-                      <input type="email" class="form-control" placeholder="Enter your email address" aria-label="Email" aria-describedby="email-addon">
+                      <input type="email" name="email" class="form-control" placeholder="Enter your email address" aria-label="Email" aria-describedby="email-addon">
                     </div>
                     <label>Password</label>
                     <div class="mb-3">
-                      <input type="email" class="form-control" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon">
+                      <input type="password" name="password" class="form-control" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon">
                     </div>
                     <div class="text-center">
-                      <button type="button" class="btn btn-dark w-100 mt-4 mb-3">Sign in</button>
+                      <button type="button" id="btnLogin" class="btn btn-dark w-100 mt-4 mb-3">Sign in</button>
                     </div>
                   </form>
                 </div>
@@ -42,6 +42,25 @@
       </div>
     </section>
   </main>
+<script>
+  $('#btnLogin').click(function() {
+    var formData = $('#adminLoginForm').serialize();
+    $.ajax({
+        type: "POST",
+        url: "/admin/login",  
+        data: formData,
+        dataType: "JSON",
+        success: function(response) {
+          if(response.status == true){
+            swal('success', response.message);
+            setTimeout(() => window.location.href ='/admin/dashboard', 2000);
+          }else{
+            swal('error', response.message);
+          }
+        }
+    });
+});
+</script>
 @include('layouts.admin.footer')
 </body>
 </html>

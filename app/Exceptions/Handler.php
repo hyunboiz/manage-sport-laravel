@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Auth\AuthenticationException;
+
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -47,4 +49,31 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        
+        if ($request->expectsJson()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Chưa đăng nhập.',
+            ], 401);
+        }
+
+        // Xác định guard nào bị fail
+        $guard = $exception->guards()[0] ?? null;
+
+        // Chuyển hướng đúng trang login theo guard
+        switch ($guard) {
+            case 'admin':
+                $loginRoute = '/admin/login';
+                break;
+            default:
+                $loginRoute = '/login';
+                break;
+        }
+
+        return redirect($loginRoute);
+    }
+
 }

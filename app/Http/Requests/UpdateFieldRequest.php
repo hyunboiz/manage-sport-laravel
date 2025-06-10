@@ -3,28 +3,50 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateFieldRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
     public function rules()
     {
         return [
-            //
+            'id' => 'required|exists:fields,id',
+            'price' => 'required|string|max:255',
+            'sport_id' => 'required|exists:sports,id',
+            'image' => 'nullable|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'type_id' => 'required|exists:types,id',
         ];
+    }
+
+    public function messages()
+    {
+        return [
+            'id.required' => 'Không tìm thấy ID sân.',
+            'id.exists' => 'Sân không tồn tại.',
+            'price.required' => 'Vui lòng nhập giá sân.',
+            'image.image' => 'File icon phải là hình ảnh.',
+            'image.mimes' => 'File icon chỉ chấp nhận: jpeg, png, jpg, gif, svg.',
+            'image.max' => 'File icon không được lớn hơn 2MB.',
+            'sport_id.required' => 'Vui lòng chọn môn thể thao.',
+            'sport_id.exists' => 'Môn thể thao không hợp lệ.',
+            'type_id.required' => 'Vui lòng chọn loại sân.',
+            'type_id.exists' => 'Loại sân không hợp lệ.',
+        ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+            response()->json([
+                'status' => false,
+                'message' => $validator->errors()->first(),
+            ], 200)
+        );
     }
 }

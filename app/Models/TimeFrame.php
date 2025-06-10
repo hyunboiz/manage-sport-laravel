@@ -9,15 +9,8 @@ class TimeFrame extends Model
 {
     use HasFactory;
     protected $fillable = ['start', 'end', 'ex_rate'];
-
-    // Accessors để trả về H:i (giờ:phút)
-    public function getStartAttribute($value)
+    public function bookingDetails()
     {
-        return date('H:i', strtotime($value));
-    }
-
-    public function getEndAttribute($value)
-    {
-        return date('H:i', strtotime($value));
+        return $this->hasMany(BookingDetail::class, 'time_id');
     }
 }

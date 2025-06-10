@@ -6,7 +6,7 @@
 
     @yield('mainsection')
 
-    @yield('script')
+    @yield('scripts')
 
     @include('layouts.user.footer')
 </body>

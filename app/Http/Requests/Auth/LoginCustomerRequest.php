@@ -1,30 +1,33 @@
-<?php
-namespace App\Http\Requests;
+<?php 
+
+namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateTypeRequest extends FormRequest
+class LoginCustomerRequest extends FormRequest
 {
-    public function authorize() { return true; }
+    public function authorize()
+    {
+        return true;
+    }
 
     public function rules()
     {
-        $id = $this->input('id');
         return [
-            'id' => 'required|exists:types,id',
-            'name' => 'required|string|max:255|unique:types,name,' . $id,
-            'description' => 'nullable|string',
+            'email' => 'required|email',
+            'password' => 'required|string|min:4',
         ];
     }
 
     public function messages()
     {
         return [
-            'id.required' => 'Thiếu ID loại sân.',
-            'name.required' => 'Vui lòng nhập tên loại sân.',
-            'name.unique' => 'Tên loại sân đã tồn tại.',
+            'email.required' => 'Vui lòng nhập email.',
+            'email.email' => 'Email không hợp lệ.',
+            'password.required' => 'Vui lòng nhập mật khẩu.',
+            'password.min' => 'Mật khẩu tối thiểu 4 ký tự.',
         ];
     }
 

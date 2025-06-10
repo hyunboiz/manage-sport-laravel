@@ -39,4 +39,8 @@ class PaymentMethod extends Model
     {
         return asset($this->icon);
     }
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class, 'payment_id');
+    }
 }

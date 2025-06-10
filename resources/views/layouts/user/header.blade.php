@@ -7,7 +7,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Tungdev.me" name="keywords">
     <meta content="Tungdev.me" name="description">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
 
@@ -23,4 +23,13 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{ asset('theme_user/css/style.css')}}" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+    $.ajaxSetup({
+        headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
 </head>

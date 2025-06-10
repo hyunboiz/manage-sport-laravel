@@ -16,7 +16,7 @@ class TimeFrameController extends Controller
      */
     public function index()
     {
-        $TimeFrame = TimeFrame::all();
+        $timeframes = TimeFrame::all();
         return view('admin.timeframe', compact('timeframes'));
     }
 
@@ -34,7 +34,6 @@ class TimeFrameController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Thêm khung giờ thành công!',
-            'data' => $timeFrame,
         ]);
     }
 
@@ -53,7 +52,6 @@ class TimeFrameController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Cập nhật khung giờ thành công!',
-            'data' => $timeFrame,
         ]);
     }
 
@@ -71,7 +69,7 @@ class TimeFrameController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => 'Không tìm thấy khung giờ!',
-            ], 404);
+            ], 200);
         }
 
         $timeFrame->delete();

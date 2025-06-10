@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
+use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
@@ -13,10 +14,16 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function viewLogin()
     {
-        //
+        return view("user.login");
     }
+
+     public function viewRegister()
+    {
+        return view("user.register");
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -25,7 +32,8 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        //
+        $customers = Customer::all();
+        return view('admin.customer', compact('customers'));
     }
 
     /**
@@ -36,29 +44,13 @@ class CustomerController extends Controller
      */
     public function store(StoreCustomerRequest $request)
     {
-        //
-    }
+        $validated = $request->validated();
+        $customer = Customer::create($validated);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Customer  $customer
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Customer $customer)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Customer  $customer
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Customer $customer)
-    {
-        //
+        return response()->json([
+            'status' => true,
+            'message' => 'Thêm mới customer thành công',
+        ]);
     }
 
     /**
@@ -70,7 +62,13 @@ class CustomerController extends Controller
      */
     public function update(UpdateCustomerRequest $request, Customer $customer)
     {
-        //
+        $customer = Customer::findOrFail($request->input('id'));
+        $customer->update($request->validated());
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Cập nhật customer thành công!',
+        ]);
     }
 
     /**
@@ -79,8 +77,22 @@ class CustomerController extends Controller
      * @param  \App\Models\Customer  $customer
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Customer $customer)
+    public function destroy(Request $request, Customer $customer)
     {
-        //
+        $customer = Customer::find($request->input('id'));
+
+        if (!$customer) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Không tìm thấy customer!',
+            ]);
+        }
+
+        $customer->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Xóa customer thành công!',
+        ]);
     }
 }

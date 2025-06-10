@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Hash;
-class Admin extends Model
+
+class Admin extends Authenticatable
 {
     use Notifiable;
 
@@ -17,14 +18,10 @@ class Admin extends Model
         'name',
     ];
 
-    // Ẩn các thuộc tính khi trả về JSON
     protected $hidden = [
         'password',
     ];
 
-     /**
-     * Tạo admin mới
-     */
     public static function createAdmin(array $data): self
     {
         return self::create([
@@ -35,9 +32,6 @@ class Admin extends Model
         ]);
     }
 
-    /**
-     * Cập nhật admin
-     */
     public function updateAdmin(array $data): bool
     {
         return $this->update([
@@ -47,11 +41,15 @@ class Admin extends Model
         ]);
     }
 
-    /**
-     * Xóa admin
-     */
     public function deleteAdmin(): bool
     {
         return $this->delete();
     }
+
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
 }
+
+

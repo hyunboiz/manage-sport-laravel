@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('time_frames', function (Blueprint $table) {
             $table->id();
-            $table->time('start');
-            $table->time('end');
+            $table->smallInteger('start');
+            $table->smallInteger('end');
             $table->bigInteger('ex_rate')->nullable()->default(12);
             $table->timestamps();
         });

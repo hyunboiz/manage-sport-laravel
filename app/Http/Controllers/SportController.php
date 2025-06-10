@@ -84,7 +84,7 @@ class SportController extends Controller
             return response()->json([
                 'status' => false,
                 'message' => 'Không tìm thấy môn thể thao với ID: ' . $id,
-            ], 404);
+            ], 200);
         }
 
         // Xóa file icon nếu có

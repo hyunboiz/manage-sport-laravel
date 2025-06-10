@@ -25,3 +25,16 @@ function swalConfirm(title, text, confrimBtn){
   }
 });
 }
+$(document).ready(function () {
+  const currentPath = window.location.pathname;
+
+  $('.nav-link').each(function () {
+    const link = $(this).attr('href');
+    if (link && currentPath === new URL(link, window.location.origin).pathname) {
+      $('.nav-link').removeClass('active'); // Xoá active cũ nếu có
+      $(this).addClass('active');
+    }
+  });
+});
+
+new DataTable('table');

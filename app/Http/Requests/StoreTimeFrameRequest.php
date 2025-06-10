@@ -5,29 +5,21 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use App\Models\TimeFrame;
+
 class StoreTimeFrameRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, mixed>
-     */
-   public function rules()
+    public function rules()
     {
         return [
-            'start' => 'required|date_format:H:i',
-            'end' => 'required|date_format:H:i|after:start',
-            'ex_rate' => 'required|numeric|min:0',
+            'start' => 'required|integer',
+            'end' => 'required|integer|gt:start',
+            'ex_rate' => 'required|numeric',
         ];
     }
 
@@ -36,10 +28,9 @@ class StoreTimeFrameRequest extends FormRequest
         return [
             'start.required' => 'Vui lòng nhập thời gian bắt đầu.',
             'end.required' => 'Vui lòng nhập thời gian kết thúc.',
-            'end.after' => 'Thời gian kết thúc phải sau thời gian bắt đầu.',
+            'end.gt' => 'Thời gian kết thúc phải lớn hơn thời gian bắt đầu.',
             'ex_rate.required' => 'Vui lòng nhập tỷ lệ quy đổi.',
             'ex_rate.numeric' => 'Tỷ lệ quy đổi phải là số.',
-            'ex_rate.min' => 'Tỷ lệ quy đổi không âm.',
         ];
     }
 
@@ -49,5 +40,25 @@ class StoreTimeFrameRequest extends FormRequest
             'status' => false,
             'message' => $validator->errors()->first(),
         ], 200));
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $start = (int) $this->input('start');
+            $end = (int) $this->input('end');
+
+            // Kiểm tra trùng lặp hoặc chồng lặp khung giờ
+            $overlap = TimeFrame::where(function ($query) use ($start, $end) {
+                $query->where(function ($q) use ($start, $end) {
+                    $q->where('start', '<', $end)
+                      ->where('end', '>', $start);
+                });
+            })->exists();
+
+            if ($overlap) {
+                $validator->errors()->add('start', 'Khung giờ bị trùng hoặc chồng lặp với khung giờ đã tồn tại.');
+            }
+        });
     }
 }

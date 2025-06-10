@@ -35,4 +35,8 @@ public function getIconUrlAttribute()
     return asset($this->icon);  // Nếu lưu full path (/storage/...), thì chỉ cần asset($this->icon)
 }
 
+public function fields()
+{
+    return $this->hasMany(Field::class);
+}
 }
