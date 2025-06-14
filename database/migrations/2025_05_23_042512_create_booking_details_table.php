@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('booking_id')->constrained('bookings')->onDelete('cascade');
             $table->foreignId('field_id')->constrained('fields')->onDelete('cascade');
             $table->foreignId('time_id')->constrained('time_frames')->onDelete('cascade');
+            $table->string('date_book');
             $table->bigInteger('price')->nullable()->default(12);
             $table->timestamps();
 

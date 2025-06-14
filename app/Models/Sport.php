@@ -39,4 +39,8 @@ public function fields()
 {
     return $this->hasMany(Field::class);
 }
+public function types()
+{
+    return $this->hasMany(Type::class);
+}
 }

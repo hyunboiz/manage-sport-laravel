@@ -71,4 +71,14 @@ class FieldController extends Controller
             'message' => 'Xóa sân thành công!',
         ]);
     }
+    public function getBySport(Request $request)
+    {
+        $request->validate([
+            'sport_id' => 'required|integer|exists:sports,id'
+        ]);
+
+        return Type::where('sport_id', $request->sport_id)
+                ->select('id', 'name')
+                ->get();
+    }
 }

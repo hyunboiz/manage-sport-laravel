@@ -52,7 +52,7 @@
                           </div>
                         </td>
                         <td> 
-                          <img src="{{ asset('storage/' . $sport->icon) }}" width="140px">
+                          <img src="{{ asset( $sport->icon) }}" width="140px">
                         </td>
                         <td class="align-middle text-center">
                           <span class="text-secondary text-sm font-weight-normal">{{ $sport->created_at }}</span>

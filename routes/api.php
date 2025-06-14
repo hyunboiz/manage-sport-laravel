@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -54,3 +55,8 @@ Route::post('/admin/deleteType',  [TypesController::class, 'destroy']);
 Route::post('/admin/createField',  [FieldController::class, 'store']);
 Route::post('/admin/updateField',  [FieldController::class, 'update']);
 Route::post('/admin/deleteField',  [FieldController::class, 'destroy']);
+
+Route::post('/customer/updateInformation', [CustomerController::class,'updateByUser']);
+
+Route::post('/loadFieldList',  [HomeController::class, 'fieldListAjax']);
+Route::post('/getTypeBySport', [FieldController::class, 'getBySport']);

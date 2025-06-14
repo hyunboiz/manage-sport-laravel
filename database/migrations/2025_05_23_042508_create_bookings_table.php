@@ -18,7 +18,6 @@ return new class extends Migration
             $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
             $table->foreignId('admin_id')->nullable()->constrained('admins')->nullOnDelete();
             $table->foreignId('payment_id')->nullable()->constrained('payment_methods')->nullOnDelete();
-            $table->string('date_book');
             $table->string('status');
             $table->decimal('total', 10, 2);
             $table->timestamps();

@@ -12,10 +12,12 @@ class UpdateTypeRequest extends FormRequest
     public function rules()
     {
         $id = $this->input('id');
+
         return [
             'id' => 'required|exists:types,id',
-            'name' => 'required|string|max:255|unique:types,name,' . $id,
+            'name' => 'required|string|max:255,' . $id,
             'description' => 'nullable|string',
+            'sport_id' => 'required|integer|exists:sports,id',
         ];
     }
 
@@ -23,8 +25,11 @@ class UpdateTypeRequest extends FormRequest
     {
         return [
             'id.required' => 'Thiếu ID loại sân.',
+            'id.exists' => 'Loại sân không tồn tại.',
             'name.required' => 'Vui lòng nhập tên loại sân.',
-            'name.unique' => 'Tên loại sân đã tồn tại.',
+            'sport_id.required' => 'Vui lòng chọn môn thể thao.',
+            'sport_id.integer' => 'ID môn thể thao phải là số nguyên.',
+            'sport_id.exists' => 'Môn thể thao không hợp lệ.',
         ];
     }
 

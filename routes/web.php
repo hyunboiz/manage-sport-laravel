@@ -33,9 +33,17 @@ Route::get('/auth/register', [CustomerController::class, 'viewRegister'])->name(
 
 
 
-
 Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminController::class, 'viewLogin']);
+});
+
+Route::middleware('auth:web')->group(function(){
+    Route::get('/user/profile', [CustomerController::class, 'viewProfile'])->name('user.profile');
+    Route::get('/user/password', [CustomerController::class, 'viewChangePass'])->name('user.password');
+    Route::get('/field/sport/{id}', [HomeController::class, 'fieldList'])->name('user.field');
+    Route::get('/cart', [HomeController::class, 'cart'])->name('user.cart');
+     Route::get('/user/history', [CustomerController::class, 'history'])->name('user.history');
+    Route::post('/api/checkout', [HomeController::class, 'checkout']);
 });
 
 // Bọc Middleware bắt phải là admin

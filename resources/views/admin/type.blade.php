@@ -19,6 +19,7 @@
           <table class="table align-items-center mb-0">
             <thead class="bg-gray-100">
               <tr>
+                <th class="text-secondary text-xs font-weight-semibold opacity-7">Sport Name</th>
                 <th class="text-secondary text-xs font-weight-semibold opacity-7">Name</th>
                 <th class="text-secondary text-xs font-weight-semibold opacity-7">Description</th>
                 <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Create At</th>
@@ -28,11 +29,12 @@
             <tbody>
               @foreach($types as $type)
               <tr>
+                <td>{{ $type->sport->name }}</td>
                 <td><strong>{{ $type->name }}</strong></td>
                 <td>{{ $type->description }}</td>
                 <td class="text-center">{{ $type->created_at }}</td>
                 <td class="text-end">
-                  <span type="button" class="edit-type-btn" @foreach($type->toArray() as $k => $v) data-{{ $k }}="{{ $v }}" @endforeach>
+                  <span type="button" class="edit-type-btn" @foreach($type->toArray() as $k => $v) @if(is_scalar($v)) data-{{ $k }}="{{ $v }}" @endif @endforeach>
                     <i class="fa fa-pencil"></i>
                   </span>
                   <span type="button" onclick="deleteType({{ $type->id }})">
@@ -59,6 +61,15 @@
       </div>
       <div class="modal-body">
         <form id="formCreateType">
+          <div class="mb-3">
+            <label>Môn thể thao</label>
+           <select name="sport_id" id="sport_id" class="form-control">
+            <option value="">--- Chọn môn thể thao ---</option>
+            @foreach ($sports as $sport)
+              <option value="{{ $sport->id }}">{{ $sport->name }}</option>
+            @endforeach
+           </select>
+          </div>
           <div class="mb-3">
             <label>Tên loại</label>
             <input type="text" name="name" class="form-control" required>
@@ -88,6 +99,12 @@
       <div class="modal-body">
         <form id="formEditType">
           <input type="hidden" name="id" id="edit-id">
+          <select name="sport_id" id="edit-sport_id" class="form-control">
+            <option value="">--- Chọn môn thể thao ---</option>
+            @foreach ($sports as $sport)
+              <option value="{{ $sport->id }}">{{ $sport->name }}</option>
+            @endforeach
+           </select>
           <div class="mb-3">
             <label>Tên loại</label>
             <input type="text" name="name" class="form-control" id="edit-name">
@@ -123,6 +140,7 @@
   $(document).on('click', '.edit-type-btn', function () {
     const data = $(this).data();
     $('#edit-id').val(data.id);
+    $('#edit-sport_id').val(data.sport_id);
     $('#edit-name').val(data.name);
     $('#edit-description').val(data.description);
     $('#editTypeModal').modal('show');

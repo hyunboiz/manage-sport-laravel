@@ -73,7 +73,7 @@ $('#btnSignup').click(function() {
         success: function(response) {
           if(response.status == true){
             swal('success', response.message);
-            setTimeout(() => window.location.href ='/', 2000);
+            setTimeout(() => window.location.href ='/auth/login', 2000);
           }else{
             swal('error', response.message);
           }

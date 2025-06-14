@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Type;
+use App\Models\Sport;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreTypeRequest;
 use App\Http\Requests\UpdateTypeRequest;
@@ -11,8 +12,9 @@ class TypesController extends Controller
 {
     public function index()
     {
-        $types = Type::all();
-        return view('admin.type', compact('types'));
+        $sports = Sport::all();
+        $types = Type::with(['sport'])->get();
+        return view('admin.type', compact('types', 'sports'));
     }
 
     public function store(StoreTypeRequest $request)
