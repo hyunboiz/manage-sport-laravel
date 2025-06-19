@@ -10,6 +10,8 @@ use App\Http\Controllers\Auth\CustomerAuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\TypesController;
 use App\Http\Controllers\FieldController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\BookingDetailController;
 
 
 use Illuminate\Support\Facades\Route;
@@ -56,7 +58,8 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::get('/customer/manage', [CustomerController::class, 'create'])->name('admin.customer');
     Route::get('/type/manage', [TypesController::class, 'index'])->name('admin.type');
     Route::get('/field/manage', [FieldController::class, 'index'])->name('admin.field');
-
+    Route::get('/booking/manage', [BookingController::class, 'index'])->name('admin.booking');
+    Route::get('/detail/{id}', [BookingDetailController::class, 'index']);
 
 });
 

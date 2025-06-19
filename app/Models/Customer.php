@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 class Customer extends Authenticatable
 {
+    use HasFactory;
     protected $fillable = ['name', 'email', 'username','password', 'hotline'];
     protected $hidden = ['password'];
 

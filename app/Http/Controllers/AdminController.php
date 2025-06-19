@@ -7,6 +7,12 @@ use App\Http\Requests\StoreAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
 use Illuminate\Http\Request;
 Use Validator;
+use App\Models\Booking;
+use App\Models\BookingDetail;
+use App\Models\Customer;
+use App\Models\Field;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 class AdminController extends Controller
 {
     /**
@@ -14,10 +20,95 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('admin.dashboard');
+        $range = $request->query('range', 'all'); // today, 7days, 1month, all
+
+        switch ($range) {
+            case 'today':
+                $startDate = Carbon::today();
+                break;
+            case '7days':
+                $startDate = Carbon::now()->subDays(6);
+                break;
+            case '1month':
+                $startDate = Carbon::now()->subDays(29);
+                break;
+            default:
+                $startDate = null; // full
+        }
+
+        $bookingQuery = Booking::query();
+        $bookingDetailQuery = BookingDetail::query();
+        if ($startDate) {
+            $bookingQuery->whereDate('created_at', '>=', $startDate);
+            $bookingDetailQuery->whereDate('date_book', '>=', $startDate);
+        }
+
+        $totalBookings = $bookingQuery->count();
+        $cancelBookings = (clone $bookingQuery)->where('status', 'cancel')->count();
+        $todayRevenue = $bookingQuery->sum('total');
+        $totalFields = Field::count();
+        $bookedFieldIds = (clone $bookingDetailQuery)->pluck('field_id')->unique();
+        $emptyFieldsToday = $totalFields - $bookedFieldIds->count();
+        $bookedHours = (clone $bookingDetailQuery)
+        ->with('timeFrame')
+        ->get()
+        ->sum(fn($b) => max(0, $b->timeFrame->end - $b->timeFrame->start));
+        // 1. Doanh thu theo ngày
+        $revenuePerDay = (clone $bookingQuery)
+            ->selectRaw('DATE(created_at) as date, SUM(total) as total')
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get()
+            ->pluck('total', 'date');
+
+        // 2. Tỷ lệ trạng thái
+        $statusCounts = (clone $bookingQuery)
+            ->select('status', DB::raw('COUNT(*) as total'))
+            ->groupBy('status')
+            ->pluck('total', 'status');
+
+        // 3. Đặt theo khung giờ
+        $bookingsPerTime = (clone $bookingDetailQuery)
+            ->select('time_id', DB::raw('COUNT(*) as total'))
+            ->groupBy('time_id')
+            ->with('timeFrame')
+            ->get();
+
+        // 4. Đặt theo loại sân
+        $bookingsPerType = (clone $bookingDetailQuery)
+            ->with('field.type')
+            ->get()
+            ->groupBy(fn($b) => optional($b->field->type)->name)
+            ->map(fn($g) => $g->count());
+
+        // 5. Tỷ lệ lấp đầy sân
+        $fillRate = (clone $bookingDetailQuery)
+            ->selectRaw('date_book, COUNT(DISTINCT field_id) as used')
+            ->groupBy('date_book')
+            ->orderBy('date_book')
+            ->get()
+            ->mapWithKeys(fn($i) => [$i->date_book => round($i->used / max($totalFields, 1) * 100, 2)]);
+
+        return view('admin.dashboard', [
+            'range'            => $range,
+            'totalBookings'    => $totalBookings,
+            'totalCustomers'   => Customer::count(),
+            'totalRevenue'     => Booking::sum('total'),
+            'cancelRate'       => $totalBookings ? round($cancelBookings / $totalBookings * 100, 2) : 0,
+            'todayBookings'    => $totalBookings,
+            'todayRevenue'     => $todayRevenue,
+            'emptyFieldsToday' => $emptyFieldsToday,
+            'revenuePerDay'    => $revenuePerDay,
+            'statusCounts'     => $statusCounts,
+            'bookingsPerTime'  => $bookingsPerTime,
+            'bookingsPerType'  => $bookingsPerType,
+            'fillRate'         => $fillRate,
+            'bookedHours' => $bookedHours,
+        ]);
     }
+
 
     public function viewLogin()
     {

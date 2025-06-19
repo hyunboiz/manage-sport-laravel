@@ -85,13 +85,8 @@
           </a>
         </li>
         <li class="nav-item border-start my-0 pt-2">
-          <a class="nav-link position-relative ms-0 ps-2 py-2 " href="../pages/sign-in.html">
+          <a class="nav-link position-relative ms-0 ps-2 py-2 " href="{{ route('admin.booking') }}">
             <span class="nav-link-text ms-1">History Booking</span>
-          </a>
-        </li>
-        <li class="nav-item border-start my-0 pt-2">
-          <a class="nav-link position-relative ms-0 ps-2 py-2 " href="../pages/sign-up.html">
-            <span class="nav-link-text ms-1">Sign Up</span>
           </a>
         </li>
       </ul>

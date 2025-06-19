@@ -247,8 +247,8 @@
                 <span>Tổng tiền: <span id="total-price"></span></span>
             </div>
             <div class="d-flex justify-content-end ml-auto">
-                <button id="next-button" class="btn next-button mr-3">Thêm vào giỏ</button>
-                <button id="submit-button" class="btn submit-button">Thanh toán</button>
+                <button id="next-button" class="btn next-button mr-3">Thêm vào lịch đặt</button>
+                {{-- <button id="submit-button" class="btn submit-button">Thanh toán</button> --}}
             </div>
         </div>
     </div>
@@ -444,7 +444,7 @@ $('#next-button').on('click', function () {
         }
     });
 
-    swal('success', 'Thêm vào giỏ thành công');
+    swal('success', 'Thêm vào lịch đặt thành công');
     setTimeout(() => {
         window.location.href = "{{ route('user.cart') }}";
     }, 2000);

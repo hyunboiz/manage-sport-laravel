@@ -11,7 +11,7 @@ use App\Http\Controllers\TimeFrameController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\TypesController;
 use App\Http\Controllers\FieldController;
-
+use App\Http\Controllers\BookingController;
 
 
 
@@ -60,3 +60,5 @@ Route::post('/customer/updateInformation', [CustomerController::class,'updateByU
 
 Route::post('/loadFieldList',  [HomeController::class, 'fieldListAjax']);
 Route::post('/getTypeBySport', [FieldController::class, 'getBySport']);
+
+Route::post('/admin/updateBooking',  [BookingController::class, 'updateStatus']);

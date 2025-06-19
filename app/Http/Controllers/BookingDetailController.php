@@ -13,9 +13,17 @@ class BookingDetailController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        //
+        $details = BookingDetail::with([
+                            'booking.customer',
+                            'booking.admin',
+                            'booking.paymentMethod',
+                            'field.sport',
+                            'field.type',
+                            'timeFrame'
+                        ])->where('booking_id', $id)->get();
+        return view('admin.details', compact('details'));
     }
 
     /**

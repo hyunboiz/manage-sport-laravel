@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Booking;
 use App\Http\Requests\StoreBookingRequest;
 use App\Http\Requests\UpdateBookingRequest;
-
+use Illuminate\Http\Request;
 class BookingController extends Controller
 {
     /**
@@ -15,7 +15,14 @@ class BookingController extends Controller
      */
     public function index()
     {
-        //
+        $bookings = Booking::with([
+                                'customer',
+                                'paymentMethod',
+                                'admin',
+                                'bookingDetails.field.sport',
+                                'bookingDetails.field.type',
+                            ])->get();
+        return view('admin.booking', compact('bookings'));
     }
 
     /**
@@ -50,27 +57,25 @@ class BookingController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Booking  $booking
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Booking $booking)
+    public function updateStatus(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'id' => 'required|exists:bookings,id',
+            'status' => 'required|in:pending,confirmed,cancel'
+        ]);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateBookingRequest  $request
-     * @param  \App\Models\Booking  $booking
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateBookingRequest $request, Booking $booking)
-    {
-        //
+        $booking = Booking::findOrFail($request->id);
+        $booking->status = $request->status;
+        $booking->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Booking status updated successfully.',
+            'data' => [
+                'id' => $booking->id,
+                'status' => $booking->status,
+            ]
+        ]);
     }
 
     /**
