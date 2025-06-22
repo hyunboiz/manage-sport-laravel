@@ -1,3 +1,4 @@
+new DataTable('.history');
 function swal(status, message){
     Swal.fire({
         icon: status,

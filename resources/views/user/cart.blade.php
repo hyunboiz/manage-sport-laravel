@@ -27,12 +27,12 @@
       <thead class="thead-dark">
         <tr>
           <th>#</th>
-          <th>Field ID</th>
-          <th>Name</th>
-          <th>Time ID</th>
-          <th>Date</th>
-          <th>Price</th>
-          <th>Action</th>
+          <th>Sân số</th>
+          <th>Chi tiết</th>
+          <th>Khung giờ</th>
+          <th>Ngày</th>
+          <th>Giá tiền</th>
+          <th>Hành động</th>
         </tr>
       </thead>
       <tbody id="cart-body">
@@ -60,7 +60,7 @@
             </label>
             @endforeach
           </div>
-          <button type="button" id="submit-button" class="btn btn-success btn-block">Checkout</button>
+          <button type="button" id="submit-button" class="btn btn-success btn-block">Thanh toán</button>
         </div>
       </div>
     </div>
@@ -72,9 +72,11 @@
 <script>
 
 $('#submit-button').on('click', function () {
+  $('#submit-button').html('Đang đặt lịch...')
     const raw = Cookies.get('bookingCart');
     if (!raw) {
         swal('error', 'Lịch đặt trống');
+        $('#submit-button').html('Thanh toán')
         return;
     }
 

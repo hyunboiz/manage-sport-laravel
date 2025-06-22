@@ -57,7 +57,7 @@
 @section('mainsection')
     <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
         <div class="container">
-            <a class="navbar-brand font-weight-bold text-primary" href="#">MyProfile</a>
+            <a class="navbar-brand font-weight-bold text-primary" href="#">Trang cá nhân</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -65,16 +65,16 @@
             <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                <a class="nav-link" href="{{ route('user.profile') }}"><i class="fa fa-user" aria-hidden="true"></i> Profile</a>
+                <a class="nav-link" href="{{ route('user.profile') }}"><i class="fa fa-user" aria-hidden="true"></i> Thông tin</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="{{ route('user.history') }}">📦 Orders</a>
+                <a class="nav-link" href="{{ route('user.history') }}">Lịch sử</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link active" href="{{ route('user.password') }}">⚙️ Change Password</a>
+                <a class="nav-link active" href="{{ route('user.password') }}">Đổi mật khẩu</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="#">🚪 Logout</a>
+                <a class="nav-link" href="#">Logout</a>
                 </li>
             </ul>
             </div>
@@ -90,25 +90,25 @@
   </div>
 
   <div class="card p-4 mt-4">
-    <h5 class="text-info mb-3">Change Pass</h5>
+    <h5 class="text-info mb-3">Đổi mật khẩu</h5>
     <form id="profileForm">
       <div class="form-row">
         <div class="form-group col-md-12">
             <input type="hidden" name="id" value="{{ optional(Auth::guard('web')->user())->id }}">
-          <label for="fullName">Password Old</label>
+          <label for="fullName">Mật khẩu cũ</label>
           <input type="passworđ" class="form-control" name="oldpassword" id="oldpassword" value="">
         </div>
         <div class="form-group col-md-12">
-          <label for="fullName">Password New</label>
+          <label for="fullName">Mật khẩu mới</label>
           <input type="passworđ" class="form-control" name="newpassword" id="newpassword" value="" >
         </div>
         <div class="form-group col-md-12">
-          <label for="fullName">Confirm Password</label>
+          <label for="fullName">Mật khẩu xác nhận</label>
           <input type="passworđ" class="form-control" name="confirm_password" id="confirm_password" value="" >
         </div>
         
         </div>
-      <button type="button" id="btnUpdate" class="btn btn-info btn-block">Save Changes</button>
+      <button type="button" id="btnUpdate" class="btn btn-info btn-block">Thay đổi</button>
     </form>
   </div>
 </div>

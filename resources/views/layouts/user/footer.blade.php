@@ -41,6 +41,8 @@
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary rounded-0 btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
     <!-- JavaScript Libraries -->
+      <script src="https://cdn.datatables.net/2.3.1/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.3.1/js/dataTables.bootstrap5.js"></script>
     <script src="{{ asset('theme_user/js/custom.js')}}" type="text/javascript"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('theme_user/lib/easing/easing.min.js')}}"></script>

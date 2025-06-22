@@ -57,7 +57,7 @@
 @section('mainsection')
     <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
         <div class="container">
-            <a class="navbar-brand font-weight-bold text-primary" href="#">MyProfile</a>
+            <a class="navbar-brand font-weight-bold text-primary" href="#">Trang cá nhân</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -65,16 +65,16 @@
             <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                <a class="nav-link" href="{{ route('user.profile') }}"><i class="fa fa-user" aria-hidden="true"></i> Profile</a>
+                <a class="nav-link" href="{{ route('user.profile') }}"><i class="fa fa-user" aria-hidden="true"></i> Thông tin</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link active" href="{{ route('user.history') }}">📦 History</a>
+                <a class="nav-link active" href="{{ route('user.history') }}">Lịch sử</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="{{ route('user.password') }}">⚙️ Change Password</a>
+                <a class="nav-link" href="{{ route('user.password') }}">Đổi mật khẩu</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="#">🚪 Logout</a>
+                <a class="nav-link" href="#">Logout</a>
                 </li>
             </ul>
             </div>
@@ -97,7 +97,7 @@
     <div class="alert alert-info text-center">Bạn chưa có đơn đặt sân nào.</div>
 @else
     <div class="table-responsive">
-        <table class="table table-bordered table-hover">
+        <table class="table table-bordered table-hover history">
             <thead class="thead-light">
                 <tr>
                     <th>#</th>
@@ -137,7 +137,6 @@
 @endsection
 
 @section('scripts')
-
 
 
 @endsection

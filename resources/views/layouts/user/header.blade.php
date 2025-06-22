@@ -25,6 +25,7 @@
     <link href="{{ asset('theme_user/css/style.css')}}" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.1/css/dataTables.bootstrap5.css">
     <script>
     $.ajaxSetup({
         headers: {

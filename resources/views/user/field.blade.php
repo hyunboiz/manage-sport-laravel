@@ -235,7 +235,7 @@
                 <span class="ml-1">Chờ TT</span>
             </div>
             <div class="legend-item d-flex justify-content-end ml-auto">
-                <button class="btn btn-warning btn-sm">Xem bảng giá</button>
+                <button class="btn btn-warning btn-sm" id="btnShowPrices" type="button">Xem bảng giá</button>
             </div>
         </div>
         <div class="table-responsive">
@@ -252,7 +252,20 @@
             </div>
         </div>
     </div>
-
+<!-- Modal Bảng giá -->
+<div class="modal fade" id="priceModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header bg-dark text-white">
+        <h5 class="modal-title text-white">Bảng giá sân</h5>
+        <button type="button" class="btn-close btn-close-white" data-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="priceModalBody">
+        <!-- JS sẽ render bảng vào đây -->
+      </div>
+    </div>
+  </div>
+</div>
 @endsection
 
 @section('scripts')
@@ -293,6 +306,8 @@ function loadSchedule(date) {
     method: "POST",
     dataType: "JSON",
     success: function (res) {
+      window.lastTimeframes = res.timeframes;
+      window.priceList = res.fields;
       renderScheduleTable(res);
     },
     error: function () {
@@ -300,6 +315,59 @@ function loadSchedule(date) {
     }
   });
 }
+
+// Nhóm khung giờ theo ex_rate và liền kề
+function groupTimeframesByExRate(timeframes) {
+  if (!Array.isArray(timeframes) || timeframes.length === 0) return [];
+  const sorted = [...timeframes].sort((a, b) => parseInt(a.start) - parseInt(b.start));
+  const grouped = [];
+  let currentGroup = {
+    start: sorted[0].start,
+    end: sorted[0].end,
+    ex_rate: sorted[0].ex_rate
+  };
+  for (let i = 1; i < sorted.length; i++) {
+    const t = sorted[i];
+    const prevEnd = parseInt(currentGroup.end);
+    const curStart = parseInt(t.start);
+    if (t.ex_rate === currentGroup.ex_rate && curStart === prevEnd) {
+      currentGroup.end = t.end;
+    } else {
+      grouped.push({ ...currentGroup });
+      currentGroup = { start: t.start, end: t.end, ex_rate: t.ex_rate };
+    }
+  }
+  grouped.push({ ...currentGroup });
+  return grouped;
+}
+
+// Hiển thị modal bảng giá
+$('#btnShowPrices').on('click', function () {
+  const groupedTimes = groupTimeframesByExRate(window.lastTimeframes || []);
+  const fields = window.priceList || [];
+  if (!groupedTimes.length || !fields.length) {
+    $('#priceModalBody').html('<p>Không có dữ liệu bảng giá.</p>');
+    return new bootstrap.Modal('#priceModal').show();
+  }
+  let html = `<div class="table-responsive"><table class="table table-bordered text-center">
+                <thead class="table-light"><tr><th>Sân / Khung giờ</th>`;
+  groupedTimes.forEach(g => {
+    html += `<th>${g.start}h - ${g.end}h</th>`;
+  });
+  html += `</tr></thead><tbody>`;
+  fields.forEach(f => {
+    html += `<tr><td>Sân #${f.id}<br><small>${f.type?.name ?? ''}</small></td>`;
+    groupedTimes.forEach(g => {
+      const finalPrice = Math.round(f.price * (100 + g.ex_rate) / 100);
+      html += `<td>${finalPrice.toLocaleString('vi-VN')} đ</td>`;
+    });
+    html += `</tr>`;
+  });
+  html += `</tbody></table></div>`;
+  $('#priceModalBody').html(html);
+  $('#priceModal').modal('show');
+});
+
 
 // === Render Schedule Table ===
 function renderScheduleTable(data) {
@@ -322,9 +390,9 @@ function renderScheduleTable(data) {
       let status = 'free';
       let tdClass = '';
       if (isLocked) {
-        status = 'booked';
+        status = 'booked'; // Ưu tiên hiển thị đã đặt
       } else if (isOutTime) {
-        status = 'locked';
+        status = 'locked'; // Chỉ hiển thị locked nếu không phải đã đặt
       }
 
       html += `<td data-field="${f.id}" data-name="${f.sport.name}" data-type="${f.type.name}" data-starthour="${t.start}" data-endhour="${t.end}" data-time="${t.id}" data-exrate="${t.ex_rate}" data-price="${f.price}" data-status="${status}"></td>`;

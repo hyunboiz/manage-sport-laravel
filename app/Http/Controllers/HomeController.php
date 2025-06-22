@@ -14,6 +14,8 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use App\Mail\BookingNotification;
+use Illuminate\Support\Facades\Mail;
 class HomeController extends Controller
 {
      public function index()
@@ -102,7 +104,8 @@ public function checkout(Request $request)
             'price'      => $item['fieldPrice'],
         ]);
     }
-
+    Mail::to('aclorider@gmail.com')
+        ->send(new BookingNotification($booking));
     // --- 4. Nếu chọn thanh toán qua VNPay ---
      if ($paymentId === '2') {
         $vnp_Url        = config('services.vnpay.url');

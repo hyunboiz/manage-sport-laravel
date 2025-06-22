@@ -57,7 +57,7 @@
 @section('mainsection')
     <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
         <div class="container">
-            <a class="navbar-brand font-weight-bold text-primary" href="#">MyProfile</a>
+            <a class="navbar-brand font-weight-bold text-primary" href="#">Trang cá nhân</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -65,16 +65,16 @@
             <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                <a class="nav-link active" href="{{ route('user.profile') }}"><i class="fa fa-user" aria-hidden="true"></i> Profile</a>
+                <a class="nav-link active" href="{{ route('user.profile') }}"><i class="fa fa-user" aria-hidden="true"></i> Thông tin</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="{{ route('user.history') }}">📦 Orders</a>
+                <a class="nav-link" href="{{ route('user.history') }}">Lịch sử</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="{{ route('user.password') }}">⚙️ Change Password</a>
+                <a class="nav-link" href="{{ route('user.password') }}">Đổi mật khẩu</a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="#">🚪 Logout</a>
+                <a class="nav-link" href="#">Logout</a>
                 </li>
             </ul>
             </div>
@@ -90,16 +90,16 @@
   </div>
 
   <div class="card p-4 mt-4">
-    <h5 class="text-info mb-3">Information</h5>
+    <h5 class="text-info mb-3">Thông tin</h5>
     <form id="profileForm">
       <div class="form-row">
         <div class="form-group col-md-6">
             <input type="hidden" name="id" value="{{ optional(Auth::guard('web')->user())->id }}">
-          <label for="fullName">Full Name</label>
+          <label for="fullName">Họ và tên</label>
           <input type="text" class="form-control" name="name" id="fullName" value="{{ optional(Auth::guard('web')->user())->name }}">
         </div>
         <div class="form-group col-md-6">
-          <label for="fullName">Username</label>
+          <label for="fullName">Tên tài khoản</label>
           <input type="text" class="form-control" name="username" id="username" value="{{ optional(Auth::guard('web')->user())->username }}" readonly>
         </div>
         </div>
@@ -109,11 +109,11 @@
           <input type="email" class="form-control" name="email" id="email" value="{{ optional(Auth::guard('web')->user())->email }}" readonly>
         </div>
         <div class="form-group col-md-6">
-          <label for="phone">Phone</label>
+          <label for="phone">Số điện thoại</label>
           <input type="text" class="form-control" name="hotline" id="phone" value="{{ optional(Auth::guard('web')->user())->hotline }}">
         </div>
       </div>
-      <button type="button" id="btnUpdate" class="btn btn-info btn-block">Save Changes</button>
+      <button type="button" id="btnUpdate" class="btn btn-info btn-block">Lưu thông tin</button>
     </form>
   </div>
 </div>
