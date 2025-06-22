@@ -62,3 +62,7 @@ Route::post('/loadFieldList',  [HomeController::class, 'fieldListAjax']);
 Route::post('/getTypeBySport', [FieldController::class, 'getBySport']);
 
 Route::post('/admin/updateBooking',  [BookingController::class, 'updateStatus']);
+
+ Route::post('/admin/bookings/create', [BookingController::class, 'store']);
+    Route::post('/get-fields-by-sport', [BookingController::class, 'fieldsBySport']);
+    Route::post('/get-available-times', [BookingController::class, 'availableTimes']);

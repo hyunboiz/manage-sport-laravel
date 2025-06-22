@@ -30,5 +30,10 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
-
+    'vnpay' => [
+    'url'    => env('VNP_URL'),
+    'return' => env('VNP_RETURNURL'),
+    'tmn'    => env('VNP_TMN_CODE'),
+    'secret' => env('VNP_HASH_SECRET'),
+],
 ];

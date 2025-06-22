@@ -69,7 +69,7 @@ class Handler extends ExceptionHandler
                 $loginRoute = '/admin/login';
                 break;
             default:
-                $loginRoute = '/login';
+                $loginRoute = '/auth/login';
                 break;
         }
 

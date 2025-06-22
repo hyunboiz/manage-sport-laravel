@@ -85,7 +85,7 @@ $('#submit-button').on('click', function () {
             return;
         }
 
-        const paymentId = $('input[name="payment"]').val(); // hoặc gán cố định
+        const paymentId = $('input[name="payment"]:checked').val(); // hoặc gán cố định
         if (!paymentId) {
             swal('error', 'Vui lòng chọn phương thức thanh toán');
             return;
@@ -99,9 +99,14 @@ $('#submit-button').on('click', function () {
                 payment_id: paymentId,
             },
             success: function (res) {
-                swal('success', res.message || 'Đặt sân thành công');
-                Cookies.remove('bookingCart'); // Xoá giỏ
-                setTimeout(() => location.href = '/lich-su-dat-san', 1500);
+              if (res.redirect) {           // ⬅️  Nếu có URL VNPay
+                window.location.href = res.redirect;
+                return;
+            }else{
+              setTimeout(()=>location.href='{{ route('user.history') }}',1500);
+              swal('success', res.message);
+            }
+            Cookies.remove('bookingCart');
             },
             error: function (xhr) {
                 let msg = 'Có lỗi xảy ra';

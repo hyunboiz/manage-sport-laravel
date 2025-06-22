@@ -13,7 +13,11 @@ protected $fillable = [
     'admin_id',
     'status',
     'total',
-    'payment_id'
+    'payment_id',
+    'payment_txnref',
+    'payment_transaction_no',
+    'paid_at',
+    'payment_note',
 ];
     public function customer()
 {

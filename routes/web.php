@@ -30,7 +30,7 @@ use Illuminate\Support\Facades\Route;
 */
 // Group for user
 Route::get('/', [HomeController::class, 'index']);
-Route::get('/auth/login', [CustomerController::class, 'viewLogin'])->name('auth.login');
+Route::get('/auth/login', [CustomerController::class, 'viewLogin'])->name('login');
 Route::get('/auth/register', [CustomerController::class, 'viewRegister'])->name('auth.register');
 
 
@@ -60,6 +60,7 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::get('/field/manage', [FieldController::class, 'index'])->name('admin.field');
     Route::get('/booking/manage', [BookingController::class, 'index'])->name('admin.booking');
     Route::get('/detail/{id}', [BookingDetailController::class, 'index']);
+    Route::get('/bookings/create', [BookingController::class, 'createView'])->name('admin.bookings.create');
 
 });
 
@@ -72,3 +73,4 @@ Route::post('/admin/logout', [AdminAuthController::class, 'logout']);
 Route::post('/customer/login', [CustomerAuthController::class, 'login']);
 Route::post('/customer/logout', [CustomerAuthController::class, 'logout']);
 Route::post('/customer/register', [CustomerAuthController::class, 'register']);
+Route::get('/vnpay/callback', [PaymentMethodController::class, 'vnpayReturn']);
