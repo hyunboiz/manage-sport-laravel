@@ -9,7 +9,7 @@
       <div class="card-header border-bottom pb-0">
         <div class="d-sm-flex align-items-center">
           <div>
-            <h6 class="font-weight-semibold text-lg mb-0">Booking Details</h6>
+            <h6 class="font-weight-semibold text-lg mb-0">Chi tiết đặt sân</h6>
             <p class="text-sm">Chi tiết các lượt đặt sân</p>
           </div>
         </div>
@@ -19,14 +19,14 @@
           <table class="table align-items-center mb-0">
             <thead class="bg-gray-100">
               <tr>
-                <th class="text-secondary text-xs font-weight-semibold opacity-7">Booking ID</th>
-                <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Field</th>
-                <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Sport</th>
-                <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Type</th>
-                <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Date</th>
-                <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Time</th>
-                <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Price</th>
-                <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Created At</th>
+                <th class="text-secondary text-xs font-weight-semibold opacity-7">Mã booking</th>
+                <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Sân</th>
+                <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Môn thể thao</th>
+                <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Loại sân</th>
+                <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Ngày thuê</th>
+                <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Khung giờ</th>
+                <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Giá tiền</th>
+                <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Tạo lúc</th>
               </tr>
             </thead>
             <tbody>

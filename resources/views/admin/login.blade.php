@@ -8,20 +8,20 @@
             <div class="col-xl-4 col-md-6 d-flex flex-column mx-auto">
               <div class="card card-plain mt-8">
                 <div class="card-header pb-0 text-left bg-transparent">
-                  <h3 class="font-weight-black text-dark display-6">Welcome back</h3>
+                  <h3 class="font-weight-black text-dark display-6">Chào mừng trở lại</h3>
                 </div>
                 <div class="card-body">
                   <form role="form" id="adminLoginForm">
-                    <label>Email Address</label>
+                    <label>Email</label>
                     <div class="mb-3">
                       <input type="email" name="email" class="form-control" placeholder="Enter your email address" aria-label="Email" aria-describedby="email-addon">
                     </div>
-                    <label>Password</label>
+                    <label>Mật khẩu</label>
                     <div class="mb-3">
                       <input type="password" name="password" class="form-control" placeholder="Enter password" aria-label="Password" aria-describedby="password-addon">
                     </div>
                     <div class="text-center">
-                      <button type="button" id="btnLogin" class="btn btn-dark w-100 mt-4 mb-3">Sign in</button>
+                      <button type="button" id="btnLogin" class="btn btn-dark w-100 mt-4 mb-3">Đăng nhập</button>
                     </div>
                   </form>
                 </div>

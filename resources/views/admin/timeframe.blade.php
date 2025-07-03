@@ -32,16 +32,18 @@
                 <table class="table align-items-center mb-0">
                   <thead class="bg-gray-100">
                     <tr>
-                      <th class="text-secondary text-xs font-weight-semibold opacity-7">Start</th>
-                      <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">End</th>
-                      <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Exchange Rate</th>
-                      <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Create At</th>
+                      <th class="text-secondary text-xs font-weight-semibold opacity-7">ID</th>
+                      <th class="text-secondary text-xs font-weight-semibold opacity-7">Bắt đầu</th>
+                      <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Kết thúc</th>
+                      <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Tỉ lệ tăng giá</th>
+                      <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Tạo lúc</th>
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
                   <tbody>
                     @foreach($timeframes as $timeframe)
                       <tr>
+                        <td>{{ $timeframe->id }}</td>
                         <td>
                          <p class="text-sm text-dark font-weight-semibold mb-0">{{ $timeframe->start }}:00</p>
                         </td>
@@ -83,31 +85,31 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5">Thêm mới Time Frame</h1>
+        <h1 class="modal-title fs-5">Thêm mới khung giờ</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form id="formCreateTimeFrame">
-            <label>Start Time</label>
+            <label>Bắt đầu</label>
             <div class="mb-3">
                 <select name="start" id="startTime" class="form-control">
-                    <option value="0">--- Select Start Time ---</option>
+                    <option value="0">--- Chọn bắt đầu ---</option>
                 </select>
             </div>
             <label>End Time</label>
             <div class="mb-3">
                 <select name="end" id="endTime" class="form-control">
-                    <option value="0">--- Select End Time ---</option>
+                    <option value="0">--- Chọn kết thúc ---</option>
                 </select>
             </div>
-             <label>Exchange Rate (%)</label>
+             <label>Tỉ lệ tăng giá (%)</label>
             <div class="mb-3">
-                <input type="number" name="ex_rate" class="form-control" placeholder="Enter Exchange Rate">
+                <input type="number" name="ex_rate" class="form-control" placeholder="VD: 20">
             </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">đóng</button>
         <button type="button" id="createTimeFrame" class="btn btn-sm btn-dark">Lưu lại</button>
       </div>
     </div>
@@ -120,27 +122,27 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editTimeFrameModalLabel">Sửa thông tin Admin</h5>
+        <h5 class="modal-title" id="editTimeFrameModalLabel">Sửa thông tin</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
         <form id="editTimeFrameForm">
           <input type="hidden" id="edit-id" name="id">
-          <label>Start Time</label>
+          <label>Bắt đầu</label>
             <div class="mb-3">
                 <select name="start" id="edit-start" class="form-control">
-                    <option value="0">--- Select Start Time ---</option>
+                    <option value="0">--- Chọn bắt đầu ---</option>
                 </select>
             </div>
-            <label>End Time</label>
+            <label>Kết thúc</label>
             <div class="mb-3">
                 <select name="end" id="edit-end" class="form-control">
-                    <option value="0">--- Select End Time ---</option>
+                    <option value="0">--- Chọn kết thúc ---</option>
                 </select>
             </div>
-             <label>Exchange Rate (%)</label>
+             <label>Tỉ lệ (%)</label>
             <div class="mb-3">
-                <input type="number" id="edit-ex_rate" name="ex_rate" class="form-control" placeholder="Enter Exchange Rate">
+                <input type="number" id="edit-ex_rate" name="ex_rate" class="form-control" placeholder="Tỉ lệ">
             </div>
         </form>
       </div>

@@ -47,7 +47,7 @@
                                 </div>
                             </div>
                             <div>
-                                <a href="{{ route("auth.login") }} "><h6 class="d-inline-block position-relative text-secondary pb-2">Already have an account? Sign in now</h6></a>
+                                <a href="{{ route("login") }} "><h6 class="d-inline-block position-relative text-secondary pb-2">Already have an account? Sign in now</h6></a>
                                 <button class="btn btn-primary py-3 w-100" type="button" id="btnSignup">Sign Up</button>
                             </div>
                         </form>

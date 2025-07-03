@@ -1,4 +1,4 @@
-new DataTable('.history');
+$('.history').DataTable({order: [0, 'desc'],})
 function swal(status, message){
     Swal.fire({
         icon: status,

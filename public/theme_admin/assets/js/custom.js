@@ -37,4 +37,4 @@ $(document).ready(function () {
   });
 });
 
-new DataTable('table');
+$('table').DataTable({order: [0, 'desc'],});

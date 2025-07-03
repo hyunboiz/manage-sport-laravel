@@ -9,12 +9,12 @@
       <div class="card-header border-bottom pb-0">
         <div class="d-sm-flex align-items-center">
           <div>
-            <h6 class="font-weight-semibold text-lg mb-0">Customer list</h6>
-            <p class="text-sm">See information about all members</p>
+            <h6 class="font-weight-semibold text-lg mb-0">Danh sách khách hàng</h6>
+            <p class="text-sm">Thông tin khách hàng</p>
           </div>
           <div class="ms-auto d-flex">
             <button type="button" data-bs-toggle="modal" data-bs-target="#createCustomerModal" class="btn btn-sm btn-dark btn-icon d-flex align-items-center me-2">
-              <i class="fa fa-plus me-2"></i> Add Customer
+              <i class="fa fa-plus me-2"></i> Thêm khách hàng
             </button>
           </div>
         </div>
@@ -24,16 +24,18 @@
           <table class="table align-items-center mb-0">
             <thead class="bg-gray-100">
               <tr>
-                <th class="text-secondary text-xs font-weight-semibold opacity-7">Customer</th>
-                <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Username</th>
-                <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Hotline</th>
-                <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Created At</th>
+                <th class="text-secondary text-xs font-weight-semibold opacity-7">ID</th>
+                <th class="text-secondary text-xs font-weight-semibold opacity-7">Thông tin</th>
+                <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Tên tài khoản</th>
+                <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Số điện thoại</th>
+                <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Tạo lúc</th>
                 <th class="text-secondary opacity-7"></th>
               </tr>
             </thead>
             <tbody>
               @foreach($customers as $customer)
               <tr>
+                <td>{{ $customer->id }}</td>
                 <td>
                   <div class="d-flex px-2 py-1">
                     <div class="d-flex flex-column justify-content-center ms-1">

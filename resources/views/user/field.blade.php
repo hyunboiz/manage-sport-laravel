@@ -496,19 +496,42 @@ $('#next-button').on('click', function () {
         return;
     }
 
-    // 👉 Lưu selections vào bookingCart (giỏ hàng chính)
-    Cookies.set('bookingCart', JSON.stringify({ selections: currentSelections }), { expires: 7 });
+    // Load giỏ hàng cũ
+    let cart = [];
+    try {
+        const raw = Cookies.get('bookingCart');
+        if (raw) {
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed.selections)) {
+                cart = parsed.selections;
+            }
+        }
+    } catch (e) {
+        cart = [];
+    }
 
-    // 👉 Xoá tạm (bookingTemp)
-    Cookies.remove('bookingTemp');
-    selectedTempCells = [];
+    // Gộp dữ liệu mới vào cart, tránh trùng
+    currentSelections.forEach(sel => {
+        const exists = cart.some(c =>
+            c.fieldId == sel.fieldId &&
+            c.timeId == sel.timeId &&
+            c.date === sel.date
+        );
+        if (!exists) cart.push(sel);
+    });
 
-    // 👉 Cập nhật giao diện: đánh dấu các ô là pending
+    // Lưu lại
+    Cookies.set('bookingCart', JSON.stringify({ selections: cart }), { expires: 7 });
+
+    // Xóa lựa chọn tạm thời
+    selectedTempCells = selectedTempCells.filter(sel => sel.date !== currentDate);
+    saveTempSelectionToCookie();
+
+    // Giao diện
     currentSelections.forEach(sel => {
         const $cell = $(`td[data-field="${sel.fieldId}"][data-time="${sel.timeId}"]`);
         if ($cell.length) {
-            $cell.attr('data-status', 'pending')
-                 .removeClass('status-selected');
+            $cell.attr('data-status', 'pending').removeClass('status-selected');
         }
     });
 
@@ -517,6 +540,7 @@ $('#next-button').on('click', function () {
         window.location.href = "{{ route('user.cart') }}";
     }, 2000);
 });
+
 // === Cookie Helpers ===
 function saveTempSelectionToCookie() {
   Cookies.set('bookingTemp', JSON.stringify({ selections: selectedTempCells }), { expires: 1 });

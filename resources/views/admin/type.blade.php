@@ -19,16 +19,18 @@
           <table class="table align-items-center mb-0">
             <thead class="bg-gray-100">
               <tr>
-                <th class="text-secondary text-xs font-weight-semibold opacity-7">Sport Name</th>
-                <th class="text-secondary text-xs font-weight-semibold opacity-7">Name</th>
-                <th class="text-secondary text-xs font-weight-semibold opacity-7">Description</th>
-                <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Create At</th>
+                <th class="text-secondary text-xs font-weight-semibold opacity-7">ID</th>
+                <th class="text-secondary text-xs font-weight-semibold opacity-7">Môn thể thao</th>
+                <th class="text-secondary text-xs font-weight-semibold opacity-7">Tên</th>
+                <th class="text-secondary text-xs font-weight-semibold opacity-7">Mô tả</th>
+                <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Tạo lúc</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
               @foreach($types as $type)
               <tr>
+                <td>{{ $type->id }}</td>
                 <td>{{ $type->sport->name }}</td>
                 <td><strong>{{ $type->name }}</strong></td>
                 <td>{{ $type->description }}</td>

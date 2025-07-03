@@ -34,10 +34,10 @@
                   <thead class="bg-gray-100">
                     <tr>
                       <th class="text-secondary text-xs font-weight-semibold opacity-7">ID</th>
-                      <th class="text-secondary text-xs font-weight-semibold opacity-7">Name</th>
-                      <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Image</th>
-                      <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Status</th>
-                      <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Create At</th>
+                      <th class="text-secondary text-xs font-weight-semibold opacity-7">Tên</th>
+                      <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Hình ảnh</th>
+                      <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Trạng thái</th>
+                      <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Tạo lúc</th>
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
@@ -96,7 +96,7 @@
       </div>
       <div class="modal-body">
         <form id="formcreatePayment">
-            <label>Payment Method Name</label>
+            <label>Tên phương thức thanh toán</label>
             <div class="mb-3">
                 <input type="text" name="name" id="paymentName" class="form-control" placeholder="Enter Payment Name">
             </div>
@@ -107,7 +107,7 @@
                     <option value="off">Dừng hoạt động</option>
                 </select>
             </div>
-            <label>image</label>
+            <label>Hình ảnh</label>
             <div class="mb-3">
                 <input type="file" name="image" id="paymentIcon" accept="image/*" class="form-control" onchange="const f=this.files[0];if(f) preview.src=(window.URL||window.webkitURL).createObjectURL(f)" placeholder="Enter Icon Image">
             </div>
@@ -115,7 +115,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">đóng</button>
         <button type="button" id="createPayment" class="btn btn-sm btn-dark">Lưu lại</button>
       </div>
     </div>

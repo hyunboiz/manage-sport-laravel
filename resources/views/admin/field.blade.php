@@ -23,7 +23,7 @@
                       <path d="M6.25 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM3.25 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM19.75 7.5a.75.75 0 00-1.5 0v2.25H16a.75.75 0 000 1.5h2.25v2.25a.75.75 0 001.5 0v-2.25H22a.75.75 0 000-1.5h-2.25V7.5z"></path>
                     </svg>
                   </span>
-                  <span class="btn-inner--text">Add Field</span>
+                  <span class="btn-inner--text">Thêm mới sân</span>
                 </button>
               </div>
             </div>
@@ -34,11 +34,11 @@
                 <thead class="bg-gray-100">
                   <tr>
                     <th class="text-secondary text-xs font-weight-semibold opacity-7">ID</th>
-                    <th class="text-secondary text-xs font-weight-semibold opacity-7">Price</th>
-                    <th class="text-secondary text-xs font-weight-semibold opacity-7">Image</th>
-                    <th class="text-secondary text-xs font-weight-semibold opacity-7">Sport</th>
-                    <th class="text-secondary text-xs font-weight-semibold opacity-7">Type</th>
-                    <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Created At</th>
+                    <th class="text-secondary text-xs font-weight-semibold opacity-7">Giá tiền</th>
+                    <th class="text-secondary text-xs font-weight-semibold opacity-7">Hình ảnh</th>
+                    <th class="text-secondary text-xs font-weight-semibold opacity-7">Môn thể thao</th>
+                    <th class="text-secondary text-xs font-weight-semibold opacity-7">Loại sân</th>
+                    <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Tạo lúc</th>
                     <th class="text-secondary opacity-7"></th>
                   </tr>
                 </thead>
@@ -117,7 +117,7 @@
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
           <button type="button" class="btn btn-dark" id="createFieldBtn">Lưu lại</button>
         </div>
       </div>
@@ -129,14 +129,14 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="editPaymentModalLabel">Sửa thông tin Field</h5>
+          <h5 class="modal-title" id="editPaymentModalLabel">Sửa thông tin Sân</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
           <form id="editAdminForm">
             <input type="hidden" id="edit-id" name="id">
             <div class="mb-3">
-              <label for="edit-price" class="form-label">Price</label>
+              <label for="edit-price" class="form-label">Giá tiền</label>
               <input type="text" class="form-control" id="edit-price" name="price">
             </div>
             <div class="mb-3">
@@ -157,7 +157,7 @@
               </select>
             </div>
             <div class="mb-3">
-              <label for="edit-icon" class="form-label">Image</label>
+              <label for="edit-icon" class="form-label">Hình ảnh</label>
               <input type="file" class="form-control" id="edit-image" accept="image/*" onchange="const f=this.files[0];if(f) editicon.src=(window.URL||window.webkitURL).createObjectURL(f)" name="image">
             </div>
             <img src="" alt="" width="140px" id="editicon">
@@ -206,7 +206,7 @@
       $('#edit-type_id').val(data.type_id);
       $('#editicon').attr('src',data.icon);
 
-      loadTypes(d.sport_id, $('#edit-type_id'), d.type_id);
+      loadTypes(data.sport_id, $('#edit-type_id'), data.type_id);
       // Hiển thị modal
       $('#editPaymentModal').modal('show');
     });

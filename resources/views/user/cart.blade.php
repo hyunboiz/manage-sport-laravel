@@ -20,7 +20,7 @@
 
 @section('mainsection')
 <div class="container my-5">
-  <h2 class="text-center mb-4">🗓️ Booking Cart</h2>
+  <h2 class="text-center mb-4">🗓️ Lịch đặt</h2>
 
   <div class="table-responsive">
     <table class="table table-bordered text-center">
@@ -45,9 +45,9 @@
     <div class="col-md-4">
       <div class="card border-info">
         <div class="card-body">
-          <h5 class="card-title">🧾 Total Summary</h5>
+          <h5 class="card-title">Thanh toán</h5>
           <p class="card-text d-flex justify-content-between">
-            <span>Total:</span>
+            <span>Tổng:</span>
             <strong id="total-price">0₫</strong>
           </p>
           <label>Phương thức thanh toán</label>
@@ -84,12 +84,14 @@ $('#submit-button').on('click', function () {
         const data = JSON.parse(raw);
         if (!data.selections || data.selections.length === 0) {
             swal('error', 'Chưa có lựa chọn nào trong giỏ');
+            $('#submit-button').html('Thanh toán')
             return;
         }
 
         const paymentId = $('input[name="payment"]:checked').val(); // hoặc gán cố định
         if (!paymentId) {
             swal('error', 'Vui lòng chọn phương thức thanh toán');
+            $('#submit-button').html('Thanh toán')
             return;
         }
 
@@ -116,11 +118,13 @@ $('#submit-button').on('click', function () {
                     msg = xhr.responseJSON.error;
                 }
                 swal('error', msg);
+                $('#submit-button').html('Thanh toán')
             }
         });
 
     } catch (e) {
         swal('error', 'Dữ liệu lịch đặt không hợp lệ');
+        $('#submit-button').html('Thanh toán')
     }
 });
 

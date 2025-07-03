@@ -32,11 +32,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/auth/login', [CustomerController::class, 'viewLogin'])->name('login');
 Route::get('/auth/register', [CustomerController::class, 'viewRegister'])->name('auth.register');
-
+Route::get('/logout', [HomeController::class, 'logout']);
 
 
 Route::prefix('admin')->group(function () {
     Route::get('/login', [AdminController::class, 'viewLogin']);
+    Route::get('/logout', [AdminController::class, 'viewLogin']);
 });
 
 Route::middleware('auth:web')->group(function(){
@@ -61,7 +62,7 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::get('/booking/manage', [BookingController::class, 'index'])->name('admin.booking');
     Route::get('/detail/{id}', [BookingDetailController::class, 'index']);
     Route::get('/bookings/create', [BookingController::class, 'createView'])->name('admin.bookings.create');
-
+    Route::get('/bookings/today', [BookingController::class, 'todaySchedule'])->name('admin.bookings.today');
 });
 
 

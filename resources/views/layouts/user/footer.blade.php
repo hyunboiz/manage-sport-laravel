@@ -8,17 +8,6 @@
                     </a>
                     <p class="m-0">Đặt sân thể thao nhanh chóng, tiện lợi, thanh toán trực tuyến dễ dàng với LoveSports</p>
                 </div>
-                <div class="col-md-6 mb-5">
-                    <h3 class="text-white mb-4">Newsletter</h3>
-                    <div class="w-100">
-                        <div class="input-group">
-                            <input type="text" class="form-control border-light" style="padding: 30px;" placeholder="Your Email Address">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary px-4">Sign Up</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

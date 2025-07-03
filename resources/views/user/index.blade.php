@@ -4,120 +4,92 @@
 
 @section('styles')
 <style>
-    /* CSS tùy chỉnh sẽ nằm ở đây */
-    /* Đảm bảo chiều cao ảnh cố định */
-    .product-card .card-img-top {
-        width: 100%;
-        height: 200px; /* Chiều cao cố định cho ảnh */
-        object-fit: cover; /* Đảm bảo ảnh không bị méo và cắt vừa khung */
-        transition: transform 0.3s ease-in-out;
+    .sport-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 24px;
     }
 
-    /* Đảm bảo chiều cao cho phần tiêu đề */
-    .product-card .card-title {
-        font-size: 1.25rem;
-        margin-bottom: 0.5rem;
-        color: #343a40;
-        /* Thêm các thuộc tính sau để kiểm soát chiều cao tiêu đề */
-        height: 3em; /* Đặt chiều cao cố định cho 2 dòng văn bản (giả sử font-size 1.25rem, line-height khoảng 1.2) */
-        overflow: hidden; /* Cắt bỏ phần text vượt quá */
-        text-overflow: ellipsis; /* Thêm dấu "..." nếu text bị cắt */
-        display: -webkit-box; /* Dùng cho Webkit (Chrome, Safari) */
-        -webkit-line-clamp: 2; /* Giới hạn 2 dòng */
-        -webkit-box-orient: vertical; /* Hướng hiển thị */
-    }
-
-    /* Các thuộc tính CSS khác từ trước */
-    .product-card {
-        border: 1px solid #dee2e6;
-        border-radius: .25rem;
+    .sport-card {
+        background: #fff;
+        border-radius: 16px;
         overflow: hidden;
-        position: relative;
-        transition: box-shadow 0.3s ease-in-out;
-        background-color: #fff;
-        /* Thêm flexbox để card tự co giãn chiều cao */
-        display: flex;
-        flex-direction: column; /* Đảm bảo các phần tử xếp dọc */
-        height: 100%; /* Quan trọng để card con giãn hết chiều cao của cột cha */
-    }
-
-    .product-card:hover {
-        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    }
-
-    .product-card:hover .card-img-top {
-        transform: scale(1.05);
-    }
-
-    .product-card .card-body {
-        padding: 1rem;
-        text-align: center;
-        /* Quan trọng: Cho phép card-body giãn nở để đẩy overlay xuống cuối */
-        flex-grow: 1;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
         display: flex;
         flex-direction: column;
-        justify-content: center; /* Căn giữa tiêu đề theo chiều dọc nếu có không gian thừa */
+        justify-content: space-between;
     }
 
-    .product-card-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
+    .sport-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+
+    .sport-card img {
         width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.6);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        opacity: 0;
-        transition: opacity 0.3s ease-in-out;
+        height: 180px;
+        object-fit: cover;
     }
 
-    .product-card:hover .product-card-overlay {
-        opacity: 1;
+    .sport-card-body {
+        padding: 16px;
+        text-align: center;
     }
 
-    .product-card-overlay .btn {
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    .sport-card-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+        height: 48px;
+        line-height: 1.4;
+        overflow: hidden;
     }
 
-    .product-card:hover .product-card-overlay .btn {
-        opacity: 1;
-        transform: translateY(0);
+    .sport-card a {
+        display: inline-block;
+        margin-top: 12px;
+        padding: 8px 20px;
+        background: #007bff;
+        color: white;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: background 0.3s ease;
+    }
+
+    .sport-card a:hover {
+        background: #0056b3;
+    }
+
+    @media (max-width: 768px) {
+        .sport-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .sport-grid {
+            grid-template-columns: 1fr;
+        }
     }
 </style>
 @endsection
 
 @section('mainsection')
-
-    <!-- About Start -->
-    <div class="container-fluid py-5">
-        <div class="container py-5">
-            <div class="row">
-                @foreach ($sports as $sport)
-                <div class="col-md-3 mb-4 d-flex">
-                    <div class="product-card">
-                        <img src="{{ asset('/storage/'. $sport->icon) }}" class="card-img-top" alt="Product 1">
-                        <div class="card-body">
-                            <h5 class="card-title">Đặt Sân {{ $sport->name }}</h5>
-                        </div>
-                        <div class="product-card-overlay">
-                            <a href="/field/sport/{{ $sport->id }}" class="btn btn-primary">Xem Chi Tiết</a>
-                        </div>
-                    </div>
-                </div>
-                @endforeach
+<div class="container py-5">
+    <h3 class="mb-4 text-center">Chọn Môn Thể Thao</h3>
+    <div class="sport-grid">
+        @foreach ($sports as $sport)
+        <div class="sport-card">
+            <img src="{{ asset($sport->icon) }}" alt="{{ $sport->name }}">
+            <div class="sport-card-body">
+                <div class="sport-card-title">Đặt Sân {{ $sport->name }}</div>
+                <a href="/field/sport/{{ $sport->id }}">Đặt sân ngay</a>
             </div>
         </div>
+        @endforeach
     </div>
-    <!-- About End -->
-
+</div>
 @endsection
-
-@section('scripts')
-
-
-@endsection
-

@@ -47,7 +47,7 @@
                     </div>
                 </div>
                 @auth('web')
-                <a href="/cart"
+                <a href="{{ route('user.cart') }}"
                     class="btn btn-outline-primary py-2 px-3 position-relative d-none d-lg-block mr-2"
                     id="cart-btn">
                         <i class="fa fa-shopping-cart"></i>
@@ -55,10 +55,10 @@
                             id="cart-count"
                             style="top: -6px; right: -6px;">0</span>
                     </a>
-                    <a href="/user/profile" class="btn btn-primary py-2 px-4 d-none d-lg-block"><i class="fa fa-user" aria-hidden="true"></i> {{ optional(Auth::guard('web')->user())->name }}</a>
+                    <a href="{{ route('user.profile') }}" class="btn btn-primary py-2 px-4 d-none d-lg-block"><i class="fa fa-user" aria-hidden="true"></i> {{ optional(Auth::guard('web')->user())->name }}</a>
                 @endauth
                 @guest
-                    <a href="/auth/login" class="btn btn-primary py-2 px-4 d-none d-lg-block"><i class="fa fa-user" aria-hidden="true"></i> Login</a>
+                    <a href="{{ route('login') }}" class="btn btn-primary py-2 px-4 d-none d-lg-block"><i class="fa fa-user" aria-hidden="true"></i> Đăng nhập</a>
                 @endguest
             </div>
         </nav>

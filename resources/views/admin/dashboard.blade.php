@@ -46,7 +46,7 @@
              <span class="btn-inner--icon">
             <i class="fa fa-share-square-o" aria-hidden="true"></i>
             </span>
-            <span class="btn-inner--text">Logout</span>
+            <a href="/admin/logout" class="btn-inner--text">Đăng xuất</a>
         </button>
         </div>
     </div>

@@ -177,7 +177,7 @@ public function store(Request $request)
 
         return response()->json([
             'status' => true,
-            'message' => 'Booking status updated successfully.',
+            'message' => 'Thay đổi trạng thái thành công.',
             'data' => [
                 'id' => $booking->id,
                 'status' => $booking->status,
@@ -194,5 +194,23 @@ public function store(Request $request)
     public function destroy(Booking $booking)
     {
         //
+    }
+
+    public function todaySchedule()
+    {
+        $today = Carbon::today()->toDateString();
+
+        $bookings = Booking::with([
+            'customer',
+            'bookingDetails' => function ($q) use ($today) {
+                $q->whereDate('date_book', $today);
+            },
+            'bookingDetails.field',
+        ])->get();
+
+        $fields = Field::with(['sport', 'type'])->get(); // Các sân
+        $timeFrames = TimeFrame::all(); // Các khung giờ
+
+        return view('admin.today', compact('bookings', 'fields', 'timeFrames', 'today'));
     }
 }

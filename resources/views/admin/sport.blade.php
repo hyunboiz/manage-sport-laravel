@@ -13,8 +13,8 @@
             <div class="card-header border-bottom pb-0">
               <div class="d-sm-flex align-items-center">
                 <div>
-                  <h6 class="font-weight-semibold text-lg mb-0">Sports list</h6>
-                  <p class="text-sm">See information about all sports</p>
+                  <h6 class="font-weight-semibold text-lg mb-0">Danh sách môn thể thao</h6>
+                  <p class="text-sm">Thông tin các môn thể thao</p>
                 </div>
                 <div class="ms-auto d-flex">
                   <button type="button" data-bs-toggle="modal" data-bs-target="#createSportModal" class="btn btn-sm btn-dark btn-icon d-flex align-items-center me-2">
@@ -34,9 +34,9 @@
                   <thead class="bg-gray-100">
                     <tr>
                       <th class="text-secondary text-xs font-weight-semibold opacity-7">ID</th>
-                      <th class="text-secondary text-xs font-weight-semibold opacity-7">Name</th>
-                      <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Image</th>
-                      <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Create At</th>
+                      <th class="text-secondary text-xs font-weight-semibold opacity-7">Tên</th>
+                      <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Hình ảnh</th>
+                      <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Tạo lúc</th>
                       <th class="text-secondary opacity-7"></th>
                     </tr>
                   </thead>
@@ -116,18 +116,18 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editSportModalLabel">Sửa thông tin Sport</h5>
+        <h5 class="modal-title" id="editSportModalLabel">Sửa thông tin thể thao</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
         <form id="editAdminForm">
           <input type="hidden" id="edit-id" name="id">
           <div class="mb-3">
-            <label for="edit-name" class="form-label">Name</label>
+            <label for="edit-name" class="form-label">Tên</label>
             <input type="text" class="form-control" id="edit-name" name="name">
           </div>
           <div class="mb-3">
-            <label for="edit-icon" class="form-label">Icon</label>
+            <label for="edit-icon" class="form-label">Hình ảnh</label>
             <input type="file" class="form-control" id="edit-icon" accept="image/*" onchange="const f=this.files[0];if(f) editicon.src=(window.URL||window.webkitURL).createObjectURL(f)" name="icon">
           </div>
           <img src="" alt="" width="140px" id="editicon">

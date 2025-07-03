@@ -6,7 +6,7 @@
 <div class="container mt-4">
   <div class="card shadow-sm">
     <div class="card-header bg-dark text-white">
-      <h5 class="mb-0">Tạo đơn đặt sân</h5>
+      <h5 class="mb-0 text-white">Tạo đơn đặt sân</h5>
     </div>
     <div class="card-body">
       <form id="bookingForm">

@@ -13,6 +13,7 @@ use App\Models\Customer;
 use App\Models\Field;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 class AdminController extends Controller
 {
     /**
@@ -203,4 +204,12 @@ class AdminController extends Controller
             'message' => 'Xóa admin thành công!',
         ]);
     }
+public function logout(Request $request)
+{
+    Auth::guard('admin')->logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return redirect('/admin/login'); // hoặc route quản trị
+}
 }

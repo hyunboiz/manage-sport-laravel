@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use App\Mail\BookingNotification;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
+
 class HomeController extends Controller
 {
      public function index()
@@ -38,7 +40,7 @@ class HomeController extends Controller
             return response()->json(['error' => 'Missing sport_id'], 400);
         }
 
-        $fields = Field::with(['sport:id,name', 'type:id,name'])
+        $fields = Field::with(['sport:id,name', 'type:id,name'])->where('status', 'active')
     ->where('sport_id', $sportId)
     ->get();
         $timeframes = TimeFrame::all();
@@ -159,4 +161,13 @@ public function checkout(Request $request)
         $payments = PaymentMethod::all();
         return view('user.cart', compact('payments'));
     }
+
+    public function logout(Request $request)
+{
+    Auth::guard('web')->logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return redirect('/auth/login'); 
+}
 }
